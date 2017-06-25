@@ -113,6 +113,9 @@ namespace NoID.Browser
 #else
             this.Controls.Add(browser);
 #endif
+            //browser.CompanyName = "HarmonIQ";
+
+            //browser.MenuHandler += OnBrowserContextMenu;
 #if NAVIGATE
             browser.StatusMessage += OnBrowserStatusMessage;
             browser.TitleChanged += OnBrowserTitleChanged;
@@ -120,12 +123,13 @@ namespace NoID.Browser
             browser.ConsoleMessage += OnBrowserConsoleMessage;
             browser.LoadingStateChanged += OnLoadingStateChanged;
             browser.AddressChanged += OnBrowserAddressChanged;
-
+            
             var bitness = Environment.Is64BitProcess ? "x64" : "x86";
             //var version = String.Format("Chromium: {0}, CEF: {1}, CefSharp: {2}, Environment: {3}", Cef.ChromiumVersion, Cef.CefVersion, Cef.CefSharpVersion, bitness);
             string initialDisplayText = String.Format(approle.ToString());
             DisplayOutput(initialDisplayText);
 #endif
+
         }
         
         //TODO: Abstract CaptureResult so it will work with any fingerprint scanner.
@@ -219,6 +223,10 @@ namespace NoID.Browser
         private void OnBrowserConsoleMessage(object sender, ConsoleMessageEventArgs args)
         {
             DisplayOutput(string.Format("Line: {0}, Source: {1}, Message: {2}", args.Line, args.Source, args.Message));
+        }
+        private void OnBrowserContextMenu(object sender, StatusMessageEventArgs args)
+        {
+            return;
         }
 
         private void OnLoadingStateChanged(object sender, LoadingStateChangedEventArgs args)
